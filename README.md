@@ -16,5 +16,6 @@ Using Sequelize to migrate MySQL Database with NodeJS.
 3. _npx sequelize-cli db:migrate_
 - Run migration
 
-
+## Create the controller and apis for CRUD operations
+## Dockerize the application.
 
