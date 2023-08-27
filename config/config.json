@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "example",
+    "database": "storage",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "example",
+    "database": "storage_test",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "example",
+    "database": "storage_production",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}
