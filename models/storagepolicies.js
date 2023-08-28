@@ -2,7 +2,8 @@
 const {
   Model
 } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+
+module.exports = (sequelize, DataTypes, Deferrable) => {
   class StoragePolicies extends Model {
     /**
      * Helper method for defining associations.
@@ -14,9 +15,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   StoragePolicies.init({
-    token: DataTypes.JSON
+    token: DataTypes.STRING,
+    storage: {
+      type: DataTypes.INTEGER
+    }
   }, {
     sequelize,
+    timestamps: false,
     modelName: 'StoragePolicies',
   });
   return StoragePolicies;

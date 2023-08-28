@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Storages.init({
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     name: DataTypes.STRING,
     private: DataTypes.INTEGER,
     createdAt: {type: DataTypes.DATE, allowNull: true},
