@@ -10,16 +10,17 @@ exports.create = async (req, res) => {
         })
         return
     }
-    
+
     // Create a new Storage
     let expiredTime = new Date(Date.UTC(2024, 12, 31))
     const policy = {
-        "Effect": req.body.effect,
-        "Resource": req.body.resource,
-        "Action": req.body.action,
-        "ExpiredTime": expiredTime.toLocaleString()
+        Effect: req.body.effect,
+        Resource: req.body.resource,
+        Action: req.body.action,
+        // ExpiredTime: expiredTime.toLocaleString()
     }
-    let token = btoa(policy)
+    
+    let token = btoa(JSON.stringify(policy))
     const storagePolicy = {
         storage: req.body.resource,
         token: token

@@ -1,5 +1,6 @@
 const db = require('../models')
 const Storages = db.Storages
+const StoragePolicies = db.StoragePolicies
 
 // Create and Save a new Storage 
 exports.create = async (req, res) => {
@@ -11,7 +12,6 @@ exports.create = async (req, res) => {
         return
     }
 
-    const d = new Date();
     // Create a new Storage
     const storage = {
         name: req.body.name,
@@ -31,4 +31,37 @@ exports.create = async (req, res) => {
           err.message || "Some error occurred while creating the Storage."
       });
     });
+}
+
+exports.accessStorage = async (req, res) => {
+  // Validate the request
+  if (!req.body.token || !req.body.action) {
+    res.status(400).send({
+      message: "Invalid request"
+    })
+    return
+  }
+
+  let token = req.body.token
+  let action = req.body.action
+  let policy = JSON.parse(atob(token))
+  let storageId = policy.Resource
+  let policyActions = policy.Action
+
+  // Validate storage id
+  const storage = await Storages.findByPk(storageId)
+  if (!storage) {
+    res.status(404).send({message: "Invalid storage"})
+    return
+  }
+  let accessDenied = true
+  policyActions.forEach(act => {
+    if (act.toLowerCase() === action.toLowerCase()) {
+      accessDenied = false
+    }
+  });
+  
+  res.status(200).send({
+    message: accessDenied ? "Access Denied" : "Access Allowed"
+  })
 }
