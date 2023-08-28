@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Storages.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    private: DataTypes.INTEGER,
+    createdAt: {type: DataTypes.DATE, allowNull: true},
+    updatedAt: {type: DataTypes.DATE, allowNull: true},
   }, {
     sequelize,
     modelName: 'Storages',
