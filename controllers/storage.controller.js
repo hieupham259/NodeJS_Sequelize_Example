@@ -65,3 +65,28 @@ exports.accessStorage = async (req, res) => {
     message: accessDenied ? "Access Denied" : "Access Allowed"
   })
 }
+
+exports.getAllPolicies = async (req, res) => {
+  // Validate the request
+  if (!req.query.storage) {
+    res.status(400).send({
+      message: "Invalid request"
+    })
+    return
+  }
+
+  let storageId = req.query.storage
+  try{
+    // Validate storage id
+    const storageExisted = await Storages.findByPk(storageId)
+    if (!storageExisted) {
+      res.status(404).send({message: "Invalid storage"})
+      return
+    }
+    const policies = await StoragePolicies.findOne({ where: { storage: storageId} });
+    res.status(200).send(policies)
+  } catch (err) {
+    res.status(400).send({message: err})
+  }
+  
+}
