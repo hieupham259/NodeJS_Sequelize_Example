@@ -30,4 +30,4 @@ Using Sequelize to migrate MySQL Database with NodeJS.
         + _Create policy to access the storage_.
         + _Delete policy of storage_.
 ## Dockerize the application.
-
+- Dockerize the mysql application.
