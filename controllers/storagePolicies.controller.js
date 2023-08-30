@@ -1,4 +1,5 @@
 const db = require('../models')
+const Storages = db.Storages
 const StoragePolicies = db.StoragePolicies
 
 // Create and Save a new Token for accessing to the Storage 
@@ -37,4 +38,33 @@ exports.create = async (req, res) => {
           err.message || "Some error occurred while creating the Policy for Storage."
       });
     });
+}
+
+// Delete policy of the given storage
+exports.delete = async (req, res) => {
+    // Validate the request
+    if (!req.query.resource) {
+        res.status(400).send({
+            message: 'Invalid request'
+        })
+        return
+    }
+
+    try {
+      // Validate storage id
+      const storageExisted = await Storages.findByPk(req.query.resource)
+      if (!storageExisted) {
+        res.status(404).send({message: "Invalid storage"})
+        return
+      }
+      await StoragePolicies.destroy({
+        where: {
+          id: req.query.resource
+        }
+      })
+      res.status(200).send({message: "Success"})
+    } catch (err) {
+      console.log({err})
+      res.status(400).send({message: err})
+    }
 }

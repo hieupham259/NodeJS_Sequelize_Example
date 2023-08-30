@@ -99,7 +99,6 @@ exports.getAllPolicies = async (req, res) => {
 // Get all storages from Storage
 exports.getAll = async (req, res) => {
   try {
-    // Validate storage id
     const allStorages = await Storages.findAll()
     res.status(200).send(allStorages)
   } catch (err) {
@@ -117,7 +116,6 @@ exports.delete = async (req, res) => {
     return
   }
   try {
-    // Validate storage id
     await Storages.destroy({
       where: {
         id: req.query.storage
