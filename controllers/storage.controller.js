@@ -33,6 +33,7 @@ exports.create = async (req, res) => {
     });
 }
 
+// Take a token and access the storage
 exports.accessStorage = async (req, res) => {
   // Validate the request
   if (!req.body.token || !req.body.action) {
@@ -47,25 +48,30 @@ exports.accessStorage = async (req, res) => {
   let policy = JSON.parse(atob(token))
   let storageId = policy.Resource
   let policyActions = policy.Action
-
-  // Validate storage id
-  const storage = await Storages.findByPk(storageId)
-  if (!storage) {
-    res.status(404).send({message: "Invalid storage"})
-    return
-  }
-  let accessDenied = true
-  policyActions.forEach(act => {
-    if (act.toLowerCase() === action.toLowerCase()) {
-      accessDenied = false
+  try {
+    // Validate storage id
+    const storage = await Storages.findByPk(storageId)
+    if (!storage) {
+      res.status(404).send({message: "Invalid storage"})
+      return
     }
-  });
+    let accessDenied = true
+    policyActions.forEach(act => {
+      if (act.toLowerCase() === action.toLowerCase()) {
+        accessDenied = false
+      }
+    });
+    
+    res.status(200).send({
+      message: accessDenied ? "Access Denied" : "Access Allowed"
+    })
+  } catch (err) {
+    res.status(400).send({message: err})
+  }
   
-  res.status(200).send({
-    message: accessDenied ? "Access Denied" : "Access Allowed"
-  })
 }
 
+// Get all policies of the storage
 exports.getAllPolicies = async (req, res) => {
   // Validate the request
   if (!req.query.storage) {
@@ -76,7 +82,7 @@ exports.getAllPolicies = async (req, res) => {
   }
 
   let storageId = req.query.storage
-  try{
+  try {
     // Validate storage id
     const storageExisted = await Storages.findByPk(storageId)
     if (!storageExisted) {
@@ -88,5 +94,37 @@ exports.getAllPolicies = async (req, res) => {
   } catch (err) {
     res.status(400).send({message: err})
   }
-  
+}
+
+// Get all storages from Storage
+exports.getAll = async (req, res) => {
+  try {
+    // Validate storage id
+    const allStorages = await Storages.findAll()
+    res.status(200).send(allStorages)
+  } catch (err) {
+    res.status(400).send({message: err})
+  }
+}
+
+// Delete the storage
+exports.delete = async (req, res) => {
+  // Validate the request
+  if (!req.query.storage) {
+    res.status(400).send({
+      message: "Invalid request"
+    })
+    return
+  }
+  try {
+    // Validate storage id
+    await Storages.destroy({
+      where: {
+        id: req.query.storage
+      }
+    })
+    res.status(200).send({message: "Success"})
+  } catch (err) {
+    res.status(400).send({message: err})
+  }
 }

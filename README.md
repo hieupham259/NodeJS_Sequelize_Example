@@ -18,12 +18,13 @@ Using Sequelize to migrate MySQL Database with NodeJS.
 - Run migration
 
 ## Create the controller and apis for CRUD operations
+(Italic is done)
 - Controller:
     1. Storage:
         + _Create storage_.
         + _Access to the storage_.
-        + Get all the storages.
-        + Delete the storages.
+        + _Get all the storages_.
+        + _Delete the storages_.
         + _Get all policies of the storage_.
     2. Storage Policy:
         + _Create policy to access the storage_.

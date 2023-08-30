@@ -3,8 +3,14 @@ const storages = require("../controllers/storage.controller.js")
 
 var router = require("express").Router()
 
-// Create a new Tutorial.
+// Create a new storage.
 router.post("/", storages.create)
+
+// Get all storages.
+router.get("/", storages.getAll)
+
+// Delete storage.
+router.delete("/", storages.delete)
 
 // Access to the storage.
 router.post("/access", storages.accessStorage)
