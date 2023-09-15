@@ -3,21 +3,21 @@
     "username": "root",
     "password": "example",
     "database": "storage",
-    "host": "localhost",
+    "host": "mysqldb",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": "example",
     "database": "storage_test",
-    "host": "localhost",
+    "host": "mysqldb",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
     "password": "example",
     "database": "storage_production",
-    "host": "localhost",
+    "host": "mysqldb",
     "dialect": "mysql"
   }
 }
