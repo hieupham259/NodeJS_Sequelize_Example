@@ -34,4 +34,4 @@ Using Sequelize to migrate MySQL Database with NodeJS.
 + docker-compose up --build -d
 + Apis:
     1. http://localhost:5000/api/storage/
-    2.http://localhost:5000/api/storage-policies/ 
+    2. http://localhost:5000/api/storage-policies/ 
